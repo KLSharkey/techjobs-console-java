@@ -50,8 +50,13 @@ public class JobData {
 
         // load data, if not already loaded
         loadData();
+        //ArrayList<HashMap<String, String>> listAllJobs= allJobs;
+        ArrayList listOfJobs = new ArrayList(allJobs); //create new list but with data cloned from allJobs
 
-        return allJobs;
+        //JobData copyJobs = new JobData();
+        //JobData listAllJobs= new JobData();
+        //listAllJobs.set(allJobs.get());
+        return listOfJobs;
     }
 
     /**
@@ -60,11 +65,35 @@ public class JobData {
      *
      * For example, searching for employer "Enterprise" will include results
      * with "Enterprise Holdings, Inc".
-     *
-     * @param column   Column that should be searched.
-     * @param value Value of teh field to search for
-     * @return List of all jobs matching the criteria
      */
+     // @param column Column that should be searched.
+     // @param value Value of teh field to search for
+     // @return List of all jobs matching the criteria
+
+
+    public static ArrayList<HashMap<String, String>> findByValue(String value) {
+        loadData();
+        ArrayList<HashMap<String, String>> jobsValues = new ArrayList<>();
+        for (HashMap<String, String> row : allJobs) { //hashmap row
+            for (HashMap.Entry<String, String> field : row.entrySet()) { //field is set view
+                String aValue = field.getValue(); //gets value from set
+                String aValueLower = aValue.toLowerCase();
+                if (aValueLower.contains(value.toLowerCase())) {
+                    //for (HashMap.Entry<String, String> fieldJobs: row.entrySet()){
+                        //if (!(jobsValues.contains(field))) {
+                    if (!(jobsValues.contains(row))){
+                            jobsValues.add(row);
+                        }
+                    }
+            }
+
+
+        }
+
+
+        return jobsValues;
+    }
+
     public static ArrayList<HashMap<String, String>> findByColumnAndValue(String column, String value) {
 
         // load data, if not already loaded
@@ -72,15 +101,18 @@ public class JobData {
 
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
 
-        for (HashMap<String, String> row : allJobs) {
+        for (HashMap<String, String> row : allJobs) { //row set view
 
             String aValue = row.get(column);
+            String aValueLow = aValue.toLowerCase(); //Make lowercase for case-insen.
 
-            if (aValue.contains(value)) {
+            if (aValueLow.contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
+        //for (){
 
+        //}
         return jobs;
     }
 

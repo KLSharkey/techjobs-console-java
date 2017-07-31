@@ -3,7 +3,9 @@ package org.launchcode.techjobs.console;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
-
+import java.util.HashMap;
+import java.util.Map;
+import java.util.*;
 /**
  * Created by LaunchCode
  */
@@ -11,7 +13,7 @@ public class TechJobs {
 
     private static Scanner in = new Scanner(System.in);
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
 
         // Initialize our field map with key/name pairs
         HashMap<String, String> columnChoices = new HashMap<>();
@@ -38,12 +40,15 @@ public class TechJobs {
                 String columnChoice = getUserSelection("List", columnChoices);
 
                 if (columnChoice.equals("all")) {
+                    //ArrayList<String> orderedJobs = JobData.findAll();
+
                     printJobs(JobData.findAll());
                 } else {
 
                     ArrayList<String> results = JobData.findAll(columnChoice);
-
+                    //ArrayList<String> orderedJobs = Collections.sort(results);
                     System.out.println("\n*** All " + columnChoices.get(columnChoice) + " Values ***");
+                    Collections.sort(results); // added in to sort ArrayList(results) alpha before printing
 
                     // Print list of skills, employers, etc
                     for (String item : results) {
@@ -58,16 +63,18 @@ public class TechJobs {
 
                 // What is their search term?
                 System.out.println("\nSearch term: ");
-                String searchTerm = in.nextLine();
+                String searchTerm = in.nextLine(); //gets there search term
 
                 if (searchField.equals("all")) {
-                    System.out.println("Search all fields not yet implemented.");
+                    printJobs(JobData.findByValue(searchTerm));
+                    //System.out.println("Search all fields not yet implemented.");
                 } else {
-                    printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
+                    printJobs(JobData.findByColumnAndValue(searchField, searchTerm)); //field and term entered
                 }
             }
         }
     }
+
 
     // ﻿Returns the key of the selected item from the choices Dictionary
     private static String getUserSelection(String menuHeader, HashMap<String, String> choices) {
@@ -103,14 +110,31 @@ public class TechJobs {
                 validChoice = true;
             }
 
-        } while(!validChoice);
+        } while (!validChoice);
 
         return choiceKeys[choiceIdx];
     }
 
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
+        //ArrayList jobLists = new ArrayList<HashMap<String, String>>;
 
-        System.out.println("printJobs is not implemented yet");
+        //System.out.println("printJobs is not implemented yet");
+        if (someJobs.size() == 0) {
+            System.out.print("No jobs available");
+        }else {
+                for (Map<String, String> entry : someJobs) {
+                    System.out.println("*****");
+                    for (Map.Entry<String, String> myValues : entry.entrySet()) {
+                        System.out.println(myValues.getKey() + ":" + myValues.getValue());
+                    }
+                    System.out.println("*****"+"\n");
+                }
+
+
+
+            }
+        }
+
+
     }
-}
