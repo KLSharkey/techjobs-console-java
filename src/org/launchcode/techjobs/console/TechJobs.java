@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Map;
-import java.util.*;
+import java.util.Collections;
+
 /**
  * Created by LaunchCode
  */
