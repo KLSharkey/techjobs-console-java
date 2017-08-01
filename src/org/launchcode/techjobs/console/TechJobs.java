@@ -3,7 +3,6 @@ package org.launchcode.techjobs.console;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.*;
 /**

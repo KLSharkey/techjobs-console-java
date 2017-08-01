@@ -31,11 +31,11 @@ public class JobData {
     public static ArrayList<String> findAll(String field) {
 
         // load data, if not already loaded
-        loadData();
+        ArrayList<HashMap<String, String>> allOfJobs = loadData();
 
         ArrayList<String> values = new ArrayList<>();
 
-        for (HashMap<String, String> row : allJobs) {
+        for (HashMap<String, String> row : allOfJobs) {
             String aValue = row.get(field);
 
             if (!values.contains(aValue)) {
@@ -49,13 +49,8 @@ public class JobData {
     public static ArrayList<HashMap<String, String>> findAll() {
 
         // load data, if not already loaded
-        loadData();
-        //ArrayList<HashMap<String, String>> listAllJobs= allJobs;
-        ArrayList listOfJobs = new ArrayList(allJobs); //create new list but with data cloned from allJobs
+        ArrayList<HashMap<String, String>> listOfJobs = loadData();
 
-        //JobData copyJobs = new JobData();
-        //JobData listAllJobs= new JobData();
-        //listAllJobs.set(allJobs.get());
         return listOfJobs;
     }
 
@@ -72,9 +67,10 @@ public class JobData {
 
 
     public static ArrayList<HashMap<String, String>> findByValue(String value) {
-        loadData();
-        ArrayList<HashMap<String, String>> jobsValues = new ArrayList<>();
-        for (HashMap<String, String> row : allJobs) { //hashmap row
+        //loadData();
+        ArrayList<HashMap<String, String>> jobsList = loadData();
+        ArrayList<HashMap<String, String>> jobsValues = new ArrayList<HashMap<String, String>>();
+        for (HashMap<String, String> row : jobsList) { //hashmap row
             for (HashMap.Entry<String, String> field : row.entrySet()) { //field is set view
                 String aValue = field.getValue(); //gets value from set
                 String aValueLower = aValue.toLowerCase();
@@ -97,11 +93,11 @@ public class JobData {
     public static ArrayList<HashMap<String, String>> findByColumnAndValue(String column, String value) {
 
         // load data, if not already loaded
-        loadData();
+        ArrayList<HashMap<String, String>> jobsList = loadData();
 
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
 
-        for (HashMap<String, String> row : allJobs) { //row set view
+        for (HashMap<String, String> row : jobsList) { //row set view
 
             String aValue = row.get(column);
             String aValueLow = aValue.toLowerCase(); //Make lowercase for case-insen.
@@ -119,11 +115,11 @@ public class JobData {
     /**
      * Read in data from a CSV file and store it in a list
      */
-    private static void loadData() {
+    private static ArrayList<HashMap<String, String>> loadData() {
 
         // Only load data once
-        if (isDataLoaded) {
-            return;
+       if (isDataLoaded) {
+            return allJobs;
         }
 
         try {
@@ -155,6 +151,7 @@ public class JobData {
             System.out.println("Failed to load job data");
             e.printStackTrace();
         }
+        return allJobs;
     }
 
 }
